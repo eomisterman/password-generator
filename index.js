@@ -98,6 +98,8 @@ specialUnsafeEl.addEventListener("click", toggleSpecialUnsafe);
 passwordLengthEl.addEventListener("click", selectText);
 passwordLengthEl.addEventListener("input", isValid);
 passwordAreaEl.addEventListener("click", copyToClipboard);
+separatorEl.addEventListener("click", selectSeparatorText);
+separatorEl.addEventListener("input", handleChangeSeparator);
 capitalizeEl.addEventListener("click", toggleCapitalize);
 incNumberEl.addEventListener("click", toggleIncNumber);
 numWordsEl.addEventListener("click", selectText);
@@ -251,6 +253,15 @@ async function copyToClipboard() {
   } catch (e) {
     console.error("Copy failed: ", e);
   }
+}
+
+function selectSeparatorText() {
+  separatorEl.select();
+}
+
+function handleChangeSeparator() {
+  passphraseSettings.separator = separatorEl.value;
+  displayPassword();
 }
 
 function toggleCapitalize() {
