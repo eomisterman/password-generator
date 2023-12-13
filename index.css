@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #1F2937;
+  color: #D5D4D8;
+  font-family: Tahoma, sans-serif;
+  font-size: large;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20%;
+  min-width: 215px;
+  max-width: 36rem;
+  margin: 5% auto;
+}
+
+.heading {
+  color: white;
+  margin: 1rem 0;
+}
+
+.highlight {
+  color: #55F991;
+}
+
+.divider {
+  color: #2F3E53;
+}
+
+.password-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #273549;
+  color: #55F991;
+  margin: 2rem 0;
+  padding: 1rem;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+  min-width: 12rem;
+  max-width: 14rem;
+  overflow-wrap: anywhere;
+}
+
+#generated-password {
+  font-family: monospace;
+  align-self: center;
+  letter-spacing: .125rem;
+  min-height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+#password-options {
+  display: none;
+}
+
+#passphrase-options {
+  display: initial;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.type-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: .5rem 0;
+}
+
+label {
+  margin-right: 1rem;
+}
+
+.invalid {
+  color: #E11D48;
+  display: none;
+  margin-right: .5rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  width: 2rem;
+  text-align: end;
+}
+
+input[type="checkbox"] {
+  accent-color: #10B981;
+}
+
+input[type="text"] {
+  width: 2rem;
+  text-align: end;
+}
+
+.input {
+  color: #FFFFFF;
+  background-color: #1F2937;
+  border: none;
+  border-bottom: solid 2px #273549;
+  font-size: 1rem;
+}
+
+.generate-btn {
+  width: fit-content;
+  padding: .6rem .9rem;
+  font-size: 1rem;
+  border-radius: .3rem;
+  background-color: #10B981;
+  color: #FFFFFF;
+  border: none;
+  margin: 1rem 0;
+  align-self: center;
+}
+
+.generate-btn:disabled {
+  background-color: #D5D4D8;
+}

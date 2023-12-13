@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Password Generator</title>
+  </head>
+  <body>
+    <main class="main-container">
+      <h1 class="heading">
+        Generate a <span class="highlight">random password</span>
+      </h1>
+      <p>Never use an insecure password again.</p>
+      <div class="password-container" id="password-area">
+        <p id="generated-password"></p>
+      </div>
+      <hr class="divider" />
+      <div class="type-container">
+        <div>
+          <label for="password">Word</label>
+          <input type="radio" id="password" name="secret-type" value="password" />
+        </div>
+        <div>
+          <label for="passphrase">Phrase</label>
+          <input type="radio" id="passphrase" name="secret-type" value="passphrase" checked />
+        </div>
+      </div>
+      <div class="options-container" id="password-options">
+        <div class="input-container">
+          <label for="pass-length">Length:</label>
+          <div>
+            <span id="invalid-password" class="invalid">Invalid</span>
+            <input
+              id="pass-length"
+              class="input"
+              type="number"
+              name="password-length"
+              placeholder="#"
+              required
+              step="1"
+              min="5"
+              max="128"
+            />
+          </div>
+        </div>
+        <div class="input-container">
+          <label for="upper">A-Z:</label>
+          <input id="upper" type="checkbox" class="input" />
+        </div>
+        <div class="input-container">
+          <label for="lower">a-z:</label>
+          <input id="lower" type="checkbox" class="input"  />
+        </div>
+        <div class="input-container">
+          <label for="numeric">0-9:</label>
+          <input id="numeric" type="checkbox" class="input"  />
+        </div>
+        <div class="input-container">
+          <label for="special-safe">!@#$%^&*:</label>
+          <input id="special-safe" type="checkbox" class="input"  />
+        </div>
+        <div class="input-container">
+          <label for="special-unsafe">More symbols:</label>
+          <input id="special-unsafe" type="checkbox" class="input"  />
+        </div>
+      </div>
+      <div class="options-container" id="passphrase-options">
+        <div class="input-container">
+          <label for="num-words">Words:</label>
+          <div>
+            <span id="invalid-passphrase" class="invalid">Invalid</span>
+            <input 
+              id="num-words"
+              class="input"
+              type="number"
+              name="num-words"
+              value="3"
+              required
+              step="1"
+              min="3"
+              max="15"
+            />
+          </div>
+        </div>
+        <div class="input-container">
+          <label for="separator">Separator:</label>
+          <input 
+            id="separator"
+            class="input"
+            type="text"
+            name="separator"
+            value="-"
+            required
+            minlength="1"
+            maxlength="1"
+            size="1"
+          />
+        </div>
+        <div class="input-container">
+          <label for="capitalize">Capitalize</label>
+          <input id="capitalize" type="checkbox" class="input"  />
+        </div>
+        <div class="input-container">
+          <label for="inc-number">Include number</label>
+          <input id="inc-number" type="checkbox" class="input"  />
+        </div>
+      </div>
+      <button class="generate-btn" id="generate-btn">Regenerate password</button>
+    </main>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
