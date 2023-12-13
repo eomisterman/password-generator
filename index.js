@@ -64,7 +64,6 @@ let inputEls = document.getElementsByTagName("input");
  * *****************************************************************************
  */
 function init() {
-  console.log("Initialization function running...");
   for (let element of inputEls) {
     if (element.type === "checkbox") {
       element.checked = true;
@@ -110,14 +109,12 @@ numWordsEl.addEventListener("input", isValidNumWords);
  * *****************************************************************************
  */
 function handlePasswordClick() {
-  console.log("Password radio clicked.");
   passwordContainer.style.display = "initial";
   passphraseContainer.style.display = "none";
   secretType = "password";
 }
 
 function handlePassphraseClick() {
-  console.log("Passphrase radio clicked.");
   passphraseContainer.style.display = "flex";
   passwordContainer.style.display = "none";
   secretType = "passphrase";
@@ -185,13 +182,10 @@ async function generatePassphrase() {
     numIndex = Math.floor(Math.random() * numWords);
   }
 
-  console.log("numIndex: ", numIndex);
   for (let i = 0; i < words.length; i++) {
     passphrase += words[i]
     
     if (numIndex !== undefined && i === numIndex) {
-      // console.log("numIndex: ", numIndex);
-      // console.log("index: ", i);
       passphrase += Math.floor(Math.random() * 10).toString();
     }
     if (i < words.length -1) {
@@ -254,7 +248,6 @@ async function copyToClipboard() {
   let text = passwordTextEl.textContent;
   try {
     await navigator.clipboard.writeText(text);
-    console.log("Copied text!");
   } catch (e) {
     console.error("Copy failed: ", e);
   }
