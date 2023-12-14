@@ -242,7 +242,7 @@ function isInvalidPasswordLength(value) {
 
 function handleUpdatePasswordLength() {
   let value = passwordLengthEl.value;
-  if (isInvalidPasswordLength()) {
+  if (isInvalidPasswordLength(value)) {
     showInvalidInputError();
     console.error("Error: Invalid input - should be an integer between 5 - 128");
   } else {
