@@ -231,7 +231,9 @@ function toggleSpecialUnsafe() {
 
 function selectText() {
   passwordLengthEl.select();
+  passwordLengthEl.focus();
   numWordsEl.select();
+  numWordsEl.focus();
 }
 
 function isValid() {
@@ -257,11 +259,14 @@ async function copyToClipboard() {
 
 function selectSeparatorText() {
   separatorEl.select();
+  separatorEl.focus();
 }
 
 function handleChangeSeparator() {
-  passphraseSettings.separator = separatorEl.value;
+  passphraseSettings.wordSeparator = separatorEl.value;
   displayPassword();
+  separatorEl.select();
+  separatorEl.focus();
 }
 
 function toggleCapitalize() {
@@ -282,5 +287,7 @@ function isValidNumWords() {
   } else {
     invalidPassphraseEl.style.display = "none";
     generateBtnEl.disabled = false;
+    passphraseSettings.numWords = value;
+    displayPassword();
   }
 }
