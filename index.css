@@ -4,8 +4,8 @@
 }
 
 body {
-  background-color: #1F2937;
-  color: #D5D4D8;
+  background-color: #3da5d9;
+  color: #FFFFFF;
   font-family: Tahoma, sans-serif;
   font-size: large;
 }
@@ -25,18 +25,18 @@ body {
 }
 
 .highlight {
-  color: #55F991;
+  color: #fec601;
 }
 
 .divider {
-  color: #2F3E53;
+  color: #2364aa;
 }
 
 .password-container {
   display: flex;
   flex-wrap: wrap;
-  background-color: #273549;
-  color: #55F991;
+  background-color: #2364aa;
+  color: #fec601;
   margin: 2rem 0;
   padding: 1rem;
   align-self: center;
@@ -90,7 +90,7 @@ label {
 }
 
 .invalid {
-  color: #E11D48;
+  color: #ea7317;
   display: none;
   margin-right: .5rem;
 }
@@ -109,7 +109,7 @@ input[type="number"] {
 }
 
 input[type="checkbox"] {
-  accent-color: #10B981;
+  accent-color: #2364aa;
 }
 
 input[type="text"] {
@@ -119,10 +119,11 @@ input[type="text"] {
 
 .input {
   color: #FFFFFF;
-  background-color: #1F2937;
+  background-color: #2364aa;
   border: none;
-  border-bottom: solid 2px #273549;
+  border-bottom: solid 2px #2364aa;
   font-size: 1rem;
+  padding-right: .3rem;
 }
 
 .generate-btn {
@@ -130,7 +131,7 @@ input[type="text"] {
   padding: .6rem .9rem;
   font-size: 1rem;
   border-radius: .3rem;
-  background-color: #10B981;
+  background-color: #fec601;
   color: #FFFFFF;
   border: none;
   margin: 1rem 0;

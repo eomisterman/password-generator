@@ -112,15 +112,52 @@ numWordsEl.addEventListener("input", handleUpdateNumWords);
  * METHODS
  * *****************************************************************************
  */
+function resetPassphraseUI() {
+  passphraseSettings = {
+    numWords: 3,
+    wordSeparator: "-",
+    capitalize: true,
+    includeNum: true,
+  };
+  numWordsEl.value = passphraseSettings.numWords;
+  separatorEl.value = passphraseSettings.wordSeparator;
+  capitalizeEl.checked = passphraseSettings.capitalize;
+  incNumberEl.checked = passphraseSettings.includeNum;
+
+  hideInvalidInputError();
+}
+
+function resetPasswordUI() {
+  passwordLength = 12;
+  passwordLengthEl.value = passwordLength;
+
+  charSet = {
+    upper: UPPER,
+    lower: LOWER,
+    numeric: NUMERIC,
+    specialSafe: SPECIALSAFE,
+    specialUnsafe: SPECIALUNSAFE,
+  };
+  for (let element of inputEls) {
+    if (element.type === "checkbox") {
+      element.checked = true;
+    }
+  }
+
+  hideInvalidInputError();
+}
+
 function handlePasswordClick() {
-  passwordContainer.style.display = "initial";
   passphraseContainer.style.display = "none";
+  resetPassphraseUI();
+  passwordContainer.style.display = "initial";
   secretType = "password";
 }
 
 function handlePassphraseClick() {
-  passphraseContainer.style.display = "flex";
   passwordContainer.style.display = "none";
+  resetPasswordUI();
+  passphraseContainer.style.display = "initial";
   secretType = "passphrase";
 }
 
@@ -193,13 +230,17 @@ async function generatePassphrase() {
 function toggleUpper() {
   upperEl.checked ? (charSet["upper"] = UPPER) : delete charSet["upper"];
   upperEl.focus();
-  displaySecret();
+  if (!isInvalidPasswordLength(passwordLengthEl.value)) {
+    displaySecret();
+  }
 }
 
 function toggleLower() {
   lowerEl.checked ? (charSet["lower"] = LOWER) : delete charSet["lower"];
   lowerEl.focus();
-  displaySecret();
+  if (!isInvalidPasswordLength(passwordLengthEl.value)) {
+    displaySecret();
+  }
 }
 
 function toggleNumeric() {
@@ -207,7 +248,9 @@ function toggleNumeric() {
     ? (charSet["numeric"] = NUMERIC)
     : delete charSet["numeric"];
   numericEl.focus();
-  displaySecret();
+  if (!isInvalidPasswordLength(passwordLengthEl.value)) {
+    displaySecret();
+  }
 }
 
 function toggleSpecialSafe() {
@@ -215,7 +258,9 @@ function toggleSpecialSafe() {
     ? (charSet["specialSafe"] = SPECIALSAFE)
     : delete charSet["specialSafe"];
   specialSafeEl.focus();
-  displaySecret();
+  if (!isInvalidPasswordLength(passwordLengthEl.value)) {
+    displaySecret();
+  }
 }
 
 function toggleSpecialUnsafe() {
@@ -223,7 +268,9 @@ function toggleSpecialUnsafe() {
     ? (charSet["specialUnsafe"] = SPECIALUNSAFE)
     : delete charSet["specialUnsafe"];
   specialUnsafeEl.focus();
-  displaySecret();
+  if (!isInvalidPasswordLength(passwordLengthEl.value)) {
+    displaySecret();
+  }
 }
 
 function selectPasswordLengthText() {
@@ -267,7 +314,9 @@ function selectSeparatorText() {
 
 function handleChangeSeparator() {
   passphraseSettings.wordSeparator = separatorEl.value;
-  displaySecret();
+  if (!isInvalidNumWordsInput(numWordsEl.value)) {
+    displaySecret();
+  }
   separatorEl.select();
   separatorEl.focus();
 }
@@ -276,22 +325,34 @@ function toggleCapitalize() {
   capitalizeEl.checked ? passphraseSettings.capitalize = true : passphraseSettings.capitalize = false;
   capitalizeEl.select();
   capitalizeEl.focus();
-  displaySecret();
+  if (!isInvalidNumWordsInput(numWordsEl.value)) {
+    displaySecret();
+  }
 }
 
 function toggleIncNumber() {
   incNumberEl.checked ? passphraseSettings.includeNum = true : passphraseSettings.includeNum = false;
   incNumberEl.focus();
-  displaySecret();
+  if (!isInvalidNumWordsInput(numWordsEl.value)) {
+    displaySecret();
+  }
 }
 
 function showInvalidInputError() {
-  invalidPassphraseEl.style.display = "initial";
+  if (secretType === "passphrase") {
+    invalidPassphraseEl.style.display = "initial";
+  } else {
+    invalidPasswordEl.style.display = "initial";
+  }
   generateBtnEl.disabled = true;
 }
 
 function hideInvalidInputError() {
-  invalidPassphraseEl.style.display = "none";
+  if (secretType === "passphrase") {
+    invalidPassphraseEl.style.display = "none";
+  } else {
+    invalidPasswordEl.style.display = "none";
+  }
   generateBtnEl.disabled = false;
 }
 
