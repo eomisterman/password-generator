@@ -12,6 +12,8 @@ let secretType = "password";
  * *****************************************************************************
  */
 
+let passwordLength = 12;
+
 let charSet = {
   upper: UPPER,
   lower: LOWER,
@@ -69,7 +71,7 @@ function init() {
       element.checked = true;
     }
   }
-  passwordLengthEl.value = "12";
+  passwordLengthEl.value = passwordLength;
 
   numWordsEl.value = passphraseSettings.numWords;
   separatorEl.value = passphraseSettings.wordSeparator;
@@ -89,21 +91,21 @@ init();
  */
 passwordRadioEl.addEventListener("click", handlePasswordClick);
 passphraseRadioEl.addEventListener("click", handlePassphraseClick);
-generateBtnEl.addEventListener("click", () => { displayPassword() }, false);
+generateBtnEl.addEventListener("click", () => { displaySecret() }, false);
 upperEl.addEventListener("click", toggleUpper);
 lowerEl.addEventListener("click", toggleLower);
 numericEl.addEventListener("click", toggleNumeric);
 specialSafeEl.addEventListener("click", toggleSpecialSafe);
 specialUnsafeEl.addEventListener("click", toggleSpecialUnsafe);
-passwordLengthEl.addEventListener("click", selectText);
-passwordLengthEl.addEventListener("input", isValid);
+passwordLengthEl.addEventListener("click", selectPasswordLengthText);
+passwordLengthEl.addEventListener("input", handleUpdatePasswordLength);
 passwordAreaEl.addEventListener("click", copyToClipboard);
 separatorEl.addEventListener("click", selectSeparatorText);
 separatorEl.addEventListener("input", handleChangeSeparator);
 capitalizeEl.addEventListener("click", toggleCapitalize);
 incNumberEl.addEventListener("click", toggleIncNumber);
-numWordsEl.addEventListener("click", selectText);
-numWordsEl.addEventListener("input", isValidNumWords);
+numWordsEl.addEventListener("click", selectNumWordsText);
+numWordsEl.addEventListener("input", handleUpdateNumWords);
 
 /**
  * *****************************************************************************
@@ -122,7 +124,7 @@ function handlePassphraseClick() {
   secretType = "passphrase";
 }
 
-async function displayPassword() {
+async function displaySecret() {
   if (secretType === "password") {
     passwordTextEl.textContent = generatePassword();
   } else {
@@ -132,17 +134,7 @@ async function displayPassword() {
 
 function generatePassword() {
   let password = "";
-  let passwordLength = parseInt(passwordLengthEl.value);
   let charsetSize = Object.keys(charSet).length;
-
-  if (charsetSize < 1) {
-    console.error("Error: No character types selected");
-    return "";
-  }
-  if (isNaN(passwordLength) || passwordLength > 128 || passwordLength < 5) {
-    console.error("Error: Invalid input - Password length");
-    return "";
-  }
 
   for (let i = 0; i < passwordLength; i++) {
     let randomSetIndex = Math.floor(Math.random() * charsetSize);
@@ -200,51 +192,62 @@ async function generatePassphrase() {
 
 function toggleUpper() {
   upperEl.checked ? (charSet["upper"] = UPPER) : delete charSet["upper"];
-  displayPassword();
+  upperEl.focus();
+  displaySecret();
 }
 
 function toggleLower() {
   lowerEl.checked ? (charSet["lower"] = LOWER) : delete charSet["lower"];
-  displayPassword();
+  lowerEl.focus();
+  displaySecret();
 }
 
 function toggleNumeric() {
   numericEl.checked
     ? (charSet["numeric"] = NUMERIC)
     : delete charSet["numeric"];
-  displayPassword();
+  numericEl.focus();
+  displaySecret();
 }
 
 function toggleSpecialSafe() {
   specialSafeEl.checked
     ? (charSet["specialSafe"] = SPECIALSAFE)
     : delete charSet["specialSafe"];
-  displayPassword();
+  specialSafeEl.focus();
+  displaySecret();
 }
 
 function toggleSpecialUnsafe() {
   specialUnsafeEl.checked
     ? (charSet["specialUnsafe"] = SPECIALUNSAFE)
     : delete charSet["specialUnsafe"];
-  displayPassword();
+  specialUnsafeEl.focus();
+  displaySecret();
 }
 
-function selectText() {
+function selectPasswordLengthText() {
   passwordLengthEl.select();
   passwordLengthEl.focus();
+}
+
+function selectNumWordsText() {
   numWordsEl.select();
   numWordsEl.focus();
 }
 
-function isValid() {
+function isInvalidPasswordLength(value) {
+  return isNaN(value) || value < 5 || value > 128;
+}
+
+function handleUpdatePasswordLength() {
   let value = passwordLengthEl.value;
-  if (isNaN(value) || value < 5 || value > 128) {
-    console.error("Error: Invalid input - Password length");
-    invalidPasswordEl.style.display = "initial";
-    generateBtnEl.disabled = true;
+  if (isInvalidPasswordLength()) {
+    showInvalidInputError();
+    console.error("Error: Invalid input - should be an integer between 5 - 128");
   } else {
-    invalidPasswordEl.style.display = "none";
-    generateBtnEl.disabled = false;
+    hideInvalidInputError();
+    passwordLength = value;
   }
 }
 
@@ -264,30 +267,46 @@ function selectSeparatorText() {
 
 function handleChangeSeparator() {
   passphraseSettings.wordSeparator = separatorEl.value;
-  displayPassword();
+  displaySecret();
   separatorEl.select();
   separatorEl.focus();
 }
 
 function toggleCapitalize() {
   capitalizeEl.checked ? passphraseSettings.capitalize = true : passphraseSettings.capitalize = false;
-  displayPassword();
+  capitalizeEl.select();
+  capitalizeEl.focus();
+  displaySecret();
 }
 
 function toggleIncNumber() {
   incNumberEl.checked ? passphraseSettings.includeNum = true : passphraseSettings.includeNum = false;
-  displayPassword();
+  incNumberEl.focus();
+  displaySecret();
 }
 
-function isValidNumWords() {
+function showInvalidInputError() {
+  invalidPassphraseEl.style.display = "initial";
+  generateBtnEl.disabled = true;
+}
+
+function hideInvalidInputError() {
+  invalidPassphraseEl.style.display = "none";
+  generateBtnEl.disabled = false;
+}
+
+function isInvalidNumWordsInput(value) {
+  return isNaN(value) || value < 3 || value > 15;
+}
+
+function handleUpdateNumWords() {
   let value = numWordsEl.value;
-  if (isNaN(value) || value < 3 || value > 15) {
-    invalidPassphraseEl.style.display = "initial";
-    generateBtnEl.disabled = true;
+  if (isInvalidNumWordsInput(value)) {
+    showInvalidInputError();
+    console.error("Error: Invalid input - should be a number ranging from 3 - 15")
   } else {
-    invalidPassphraseEl.style.display = "none";
-    generateBtnEl.disabled = false;
+    hideInvalidInputError();
     passphraseSettings.numWords = value;
-    displayPassword();
+    displaySecret();
   }
 }
