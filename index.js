@@ -57,8 +57,9 @@ let separatorEl = document.getElementById("separator");
 let capitalizeEl = document.getElementById("capitalize");
 let incNumberEl = document.getElementById("inc-number");
 let invalidPassphraseEl = document.getElementById("invalid-passphrase");
-let generateBtnEl = document.getElementById("generate-btn");
+let generateBtn = document.getElementById("generate-btn");
 let inputEls = document.getElementsByTagName("input");
+let tooltipEl = document.getElementById("tooltip");
 
 /**
  * *****************************************************************************
@@ -91,7 +92,7 @@ init();
  */
 passwordRadioEl.addEventListener("click", handlePasswordClick);
 passphraseRadioEl.addEventListener("click", handlePassphraseClick);
-generateBtnEl.addEventListener("click", () => { displaySecret() }, false);
+generateBtn.addEventListener("click", () => { displaySecret() }, false);
 upperEl.addEventListener("click", toggleUpper);
 lowerEl.addEventListener("click", toggleLower);
 numericEl.addEventListener("click", toggleNumeric);
@@ -99,6 +100,7 @@ specialSafeEl.addEventListener("click", toggleSpecialSafe);
 specialUnsafeEl.addEventListener("click", toggleSpecialUnsafe);
 passwordLengthEl.addEventListener("click", selectPasswordLengthText);
 passwordLengthEl.addEventListener("input", handleUpdatePasswordLength);
+passwordAreaEl.addEventListener("click", showTooltip);
 passwordAreaEl.addEventListener("click", copyToClipboard);
 separatorEl.addEventListener("click", selectSeparatorText);
 separatorEl.addEventListener("input", handleChangeSeparator);
@@ -298,6 +300,16 @@ function handleUpdatePasswordLength() {
   }
 }
 
+function showTooltip() {
+  tooltipEl.style.display = "initial";
+  tooltipEl.style.animation = 'fadeInOut 2s ease-out';
+
+  // Remove tooltip after 1 second
+  setTimeout(function() {
+    tooltipEl.style.display = "none";
+  }, 2000);
+}
+
 async function copyToClipboard() {
   let text = passwordTextEl.textContent;
   try {
@@ -344,7 +356,7 @@ function showInvalidInputError() {
   } else {
     invalidPasswordEl.style.display = "initial";
   }
-  generateBtnEl.disabled = true;
+  generateBtn.disabled = true;
 }
 
 function hideInvalidInputError() {
@@ -353,7 +365,7 @@ function hideInvalidInputError() {
   } else {
     invalidPasswordEl.style.display = "none";
   }
-  generateBtnEl.disabled = false;
+  generateBtn.disabled = false;
 }
 
 function isInvalidNumWordsInput(value) {

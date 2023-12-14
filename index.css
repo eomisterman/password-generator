@@ -55,6 +55,25 @@ body {
   line-height: 1.2rem;
 }
 
+.tooltip {
+  position: absolute;
+  background-color: black;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  display: none;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 #password-options {
   display: none;
 }
@@ -126,7 +145,7 @@ input[type="text"] {
   padding-right: .3rem;
 }
 
-.generate-btn {
+.btn {
   width: fit-content;
   padding: .6rem .9rem;
   font-size: 1rem;
@@ -134,10 +153,10 @@ input[type="text"] {
   background-color: #fec601;
   color: #FFFFFF;
   border: none;
-  margin: 1rem 0;
+  margin-top: 1rem;
   align-self: center;
 }
 
-.generate-btn:disabled {
+.btn:disabled {
   background-color: #D5D4D8;
 }
